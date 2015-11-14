@@ -18,6 +18,11 @@
  */
 class BTLeafNode {
   public:
+    BTLeafNode();
+    ~BTLeafNode();
+    int getMaxKeyCount();
+    void setCurrKeyCount(int x);
+
    /**
     * Insert the (key, rid) pair to the node.
     * Remember that all keys inside a B+tree node should be kept sorted.
@@ -104,6 +109,13 @@ class BTLeafNode {
     * that contains the node.
     */
     char buffer[PageFile::PAGE_SIZE];
+
+    int maxKeyCount;
+    int currKeyCount;
+    typedef struct{
+        int key;
+        RecordId rid;
+    } entry;
 }; 
 
 
@@ -182,6 +194,13 @@ class BTNonLeafNode {
     * that contains the node.
     */
     char buffer[PageFile::PAGE_SIZE];
+
+    int maxKeyCount;
+    int currKeyCount;
+    typedef struct{
+        int key;
+        RecordId rid;
+    } entry;
 }; 
 
 #endif /* BTREENODE_H */

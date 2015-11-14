@@ -138,6 +138,7 @@ RC SqlEngine::load(const string& table, const string& loadfile, bool index)
   RecordFile record_file;
   RecordId record_id;
   RC rc;
+  BTreeIndex bpt;
   //open file stream
   ifstream file(loadfile.c_str());
   //open loadfile
@@ -161,15 +162,21 @@ RC SqlEngine::load(const string& table, const string& loadfile, bool index)
     getline(file, line);
 
     if((rc=parseLoadLine(line, key, value))<0) {
+      fprintf(stderr, "Could not parse line from File: %s\n", loadfile.c_str());
       break;
     }
     //ignore empty lines
     if(key!=0||strcmp(value.c_str(), "")!=0) {
       //write to table
-      record_file.append(key, value, record_id);
-      //figure out index
+      if((rc=record_file.append(key, value, record_id))<0) {
+        fprintf(stderr, "Could not insert key: %s\n", key);
+        break;
+      }
       if(index) {
-        //figure this out
+        if((rc=bpt.insert(key, record_id))<0) {
+          fprintf(stderr, "Could not write to Index for Table\n");
+          break;
+        }
       }
     }
   }
