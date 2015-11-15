@@ -12,7 +12,7 @@
 
 #include "RecordFile.h"
 #include "PageFile.h"
-
+#include <string.h>
 /**
  * BTLeafNode: The class representing a B+tree leaf node.
  */
@@ -124,6 +124,10 @@ class BTLeafNode {
  */
 class BTNonLeafNode {
   public:
+    BTNonLeafNode();
+    ~BTNonLeafNode();
+    int getMaxKeyCount();
+    void setCurrKeyCount(int x);
    /**
     * Insert a (key, pid) pair to the node.
     * Remember that all keys inside a B+tree node should be kept sorted.
@@ -199,7 +203,7 @@ class BTNonLeafNode {
     int currKeyCount;
     typedef struct{
         int key;
-        RecordId rid;
+        PageId pid;
     } entry;
 }; 
 
