@@ -1,0 +1,116 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXFileReference section */
+		D96B2CED1C0113010099A096 /* bruinbase */ = {isa = PBXFileReference; lastKnownFileType = file; path = bruinbase; sourceTree = "<group>"; };
+		D96B2CEE1C0113010099A096 /* Bruinbase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bruinbase.h; sourceTree = "<group>"; };
+		D96B2CEF1C0113010099A096 /* BTreeIndex.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BTreeIndex.cc; sourceTree = "<group>"; };
+		D96B2CF01C0113010099A096 /* BTreeIndex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTreeIndex.h; sourceTree = "<group>"; };
+		D96B2CF11C0113010099A096 /* BTreeNode.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BTreeNode.cc; sourceTree = "<group>"; };
+		D96B2CF21C0113010099A096 /* BTreeNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTreeNode.h; sourceTree = "<group>"; };
+		D96B2CF31C0113010099A096 /* lex.sql.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lex.sql.c; sourceTree = "<group>"; };
+		D96B2CF41C0113010099A096 /* main.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cc; sourceTree = "<group>"; };
+		D96B2CF51C0113010099A096 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		D96B2CF61C0113010099A096 /* movie.del */ = {isa = PBXFileReference; lastKnownFileType = text; path = movie.del; sourceTree = "<group>"; };
+		D96B2CF71C0113010099A096 /* movie.tbl */ = {isa = PBXFileReference; lastKnownFileType = file; path = movie.tbl; sourceTree = "<group>"; };
+		D96B2CF81C0113010099A096 /* PageFile.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PageFile.cc; sourceTree = "<group>"; };
+		D96B2CF91C0113010099A096 /* PageFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PageFile.h; sourceTree = "<group>"; };
+		D96B2CFA1C0113010099A096 /* readme.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
+		D96B2CFB1C0113010099A096 /* RecordFile.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RecordFile.cc; sourceTree = "<group>"; };
+		D96B2CFC1C0113010099A096 /* RecordFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecordFile.h; sourceTree = "<group>"; };
+		D96B2CFD1C0113010099A096 /* SqlEngine.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SqlEngine.cc; sourceTree = "<group>"; };
+		D96B2CFE1C0113010099A096 /* SqlEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SqlEngine.h; sourceTree = "<group>"; };
+		D96B2CFF1C0113010099A096 /* SqlParser.l */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.lex; path = SqlParser.l; sourceTree = "<group>"; };
+		D96B2D001C0113010099A096 /* SqlParser.tab.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SqlParser.tab.c; sourceTree = "<group>"; };
+		D96B2D011C0113010099A096 /* SqlParser.tab.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SqlParser.tab.h; sourceTree = "<group>"; };
+		D96B2D021C0113010099A096 /* SqlParser.y */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.yacc; path = SqlParser.y; sourceTree = "<group>"; };
+		D96B2D031C0113010099A096 /* team.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = team.txt; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		D96B2CE61C0112F00099A096 = {
+			isa = PBXGroup;
+			children = (
+				D96B2CED1C0113010099A096 /* bruinbase */,
+				D96B2CEE1C0113010099A096 /* Bruinbase.h */,
+				D96B2CEF1C0113010099A096 /* BTreeIndex.cc */,
+				D96B2CF01C0113010099A096 /* BTreeIndex.h */,
+				D96B2CF11C0113010099A096 /* BTreeNode.cc */,
+				D96B2CF21C0113010099A096 /* BTreeNode.h */,
+				D96B2CF31C0113010099A096 /* lex.sql.c */,
+				D96B2CF41C0113010099A096 /* main.cc */,
+				D96B2CF51C0113010099A096 /* Makefile */,
+				D96B2CF61C0113010099A096 /* movie.del */,
+				D96B2CF71C0113010099A096 /* movie.tbl */,
+				D96B2CF81C0113010099A096 /* PageFile.cc */,
+				D96B2CF91C0113010099A096 /* PageFile.h */,
+				D96B2CFA1C0113010099A096 /* readme.txt */,
+				D96B2CFB1C0113010099A096 /* RecordFile.cc */,
+				D96B2CFC1C0113010099A096 /* RecordFile.h */,
+				D96B2CFD1C0113010099A096 /* SqlEngine.cc */,
+				D96B2CFE1C0113010099A096 /* SqlEngine.h */,
+				D96B2CFF1C0113010099A096 /* SqlParser.l */,
+				D96B2D001C0113010099A096 /* SqlParser.tab.c */,
+				D96B2D011C0113010099A096 /* SqlParser.tab.h */,
+				D96B2D021C0113010099A096 /* SqlParser.y */,
+				D96B2D031C0113010099A096 /* team.txt */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		D96B2CE71C0112F00099A096 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0620;
+			};
+			buildConfigurationList = D96B2CEA1C0112F00099A096 /* Build configuration list for PBXProject "BruinBaseProj" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D96B2CE61C0112F00099A096;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		D96B2CEB1C0112F00099A096 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		D96B2CEC1C0112F00099A096 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D96B2CEA1C0112F00099A096 /* Build configuration list for PBXProject "BruinBaseProj" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D96B2CEB1C0112F00099A096 /* Debug */,
+				D96B2CEC1C0112F00099A096 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D96B2CE71C0112F00099A096 /* Project object */;
+}
