@@ -18,6 +18,7 @@ using namespace std;
 BTreeIndex::BTreeIndex()
 {
     rootPid = -1;
+    treeHeight = 0;
 }
 
 /*
@@ -29,7 +30,17 @@ BTreeIndex::BTreeIndex()
  */
 RC BTreeIndex::open(const string& indexname, char mode)
 {
+    if(pf.open(indexname, mode)!=0)
+    	return DEFAULT_ERROR_CODE;
+    if(pf.endPid()>0) {
+    	char buffer[DEFAULT_SIZE];
+    	pf.read(TREE_PAGE, buffer);
+    	bTreeInfo* info=(bTreeInfo*) buffer;
+    	treeHeight=info->totalHeight;
+    	rootPid=info->rootPid;
+    }
     return 0;
+
 }
 
 /*
@@ -38,7 +49,13 @@ RC BTreeIndex::open(const string& indexname, char mode)
  */
 RC BTreeIndex::close()
 {
-    return 0;
+    char buffer[DEFAULT_SIZE];
+    pf.read(TREE_PAGE, buffer);
+    bTreeInfo* info=(bTreeInfo*) buffer;
+    info->totalHeight=treeHeight;
+    info->rootPid=rootPid;
+    pf.write(TREE_PAGE, buffer);
+    return pf.close();
 }
 
 /*
@@ -51,7 +68,6 @@ RC BTreeIndex::insert(int key, const RecordId& rid)
 {
     return 0;
 }
-
 /**
  * Run the standard B+Tree key search algorithm and identify the
  * leaf node where searchKey may exist. If an index entry with
@@ -72,9 +88,38 @@ RC BTreeIndex::insert(int key, const RecordId& rid)
  */
 RC BTreeIndex::locate(int searchKey, IndexCursor& cursor)
 {
+	//if no nodes in tree then return RC_NO_SUCH_RECORD
+    if(treeHeight==0)
+    	return RC_NO_SUCH_RECORD;
+    //set pid to root intitially
+    PageId pid=rootPid;
+    //create new non-leaf node and intitalize it as the root
+    BTNonLeafNode* node=new BTNonLeafNode();
+    node->initializeRoot(0,-1,-1);
+    //if tree has more than a root node
+    if(treeHeight>1) {
+    	//reach correct leafnode for searchkey
+    	for(int currHeight=1; currHeight<treeHeight; currHeight++) {
+    		//read contents of NonLeafNode
+    		if(node->read(pid, pf)<0)
+    			return DEFAULT_ERROR_CODE;
+    		//find next node to lead up to correct leaf node, here pid will point us to the right node
+    		if(node->locateChildPtr(searchKey, pid)<0)
+    			return DEFAULT_ERROR_CODE;
+    	}
+    }
+    //create a leafe node
+    BTLeafNode* leaf=new BTLeafNode();
+    //read contents of NonLeafNode
+    if(leaf->read(pid, pf)<0)
+    	return DEFAULT_ERROR_CODE;
+    //find key in leaf node, if key is found set cursor's eid to eid of the found key
+    if(leaf->locate(searchKey, cursor.eid)<0)
+    	return RC_NO_SUCH_RECORD;
+    //if key is found then set the cursor's pid to the pid of the leaf-node
+    cursor.pid=pid;
     return 0;
 }
-
 /*
  * Read the (key, rid) pair at the location specified by the index cursor,
  * and move foward the cursor to the next entry.
@@ -85,5 +130,14 @@ RC BTreeIndex::locate(int searchKey, IndexCursor& cursor)
  */
 RC BTreeIndex::readForward(IndexCursor& cursor, int& key, RecordId& rid)
 {
+    BTLeafNode* leaf=new BTLeafNode();
+    //read contents of NonLeafNode
+    if(leaf->read(cursor.pid, pf)<0)
+    	return DEFAULT_ERROR_CODE;
+    //get contents of cursor eid
+    if(leaf->readEntry(cursor.eid, key, rid)<0)
+    	return DEFAULT_ERROR_CODE;
+    //move forward cursor by incrementing cursor.eid
+    cursor.eid++;
     return 0;
 }

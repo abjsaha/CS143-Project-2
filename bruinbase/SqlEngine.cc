@@ -152,7 +152,7 @@ RC SqlEngine::load(const string& table, const string& loadfile, bool index)
   }
   //check index option
   if(index) {
-    if((rc=record_file.open(table+".idx", 'w'))<0) {
+    if((rc=bpt.open(table+".idx", 'w'))<0) {
       fprintf(stderr, "Could Not Create or Write to Index for Table: %s\n", table.c_str());
     }
   }  
@@ -184,7 +184,7 @@ RC SqlEngine::load(const string& table, const string& loadfile, bool index)
   record_file.close();
   file.close();
   if(index)
-    //figure this out;
+    bpt.close();
   return 0;
 }
 

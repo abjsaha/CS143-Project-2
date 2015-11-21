@@ -47,7 +47,9 @@ RC BTLeafNode::write(PageId pid, PageFile& pf)
  */
 int BTLeafNode::getKeyCount()
 {
-	return currKeyCount;
+	int n=0;
+	for(entry* curr=(entry*)(buffer);(curr->key)!=0&&n<getMaxKeyCount();curr++, n++);
+	return n;
 }
 
 /*
@@ -246,7 +248,9 @@ RC BTNonLeafNode::write(PageId pid, PageFile& pf)
  */
 int BTNonLeafNode::getKeyCount()
 {
-	return currKeyCount;
+	int n=0;
+	for(entry* curr=(entry*)(buffer+sizeof(PageId));(curr->key)!=0&&n<getMaxKeyCount();curr++, n++);
+	return n;
 }
 
 

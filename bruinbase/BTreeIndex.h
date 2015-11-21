@@ -27,6 +27,13 @@ typedef struct {
   int     eid;  
 } IndexCursor;
 
+typedef struct {
+  PageId rootPid;
+  int totalHeight;
+} bTreeInfo;
+#define TREE_PAGE 0
+#define DEFAULT_ERROR_CODE -1
+#define DEFAULT_SIZE 1024
 /**
  * Implements a B-Tree index for bruinbase.
  * 
