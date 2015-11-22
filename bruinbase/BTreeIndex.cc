@@ -66,7 +66,95 @@ RC BTreeIndex::close()
  */
 RC BTreeIndex::insert(int key, const RecordId& rid)
 {
+    IndexCursor cursor;
+    
+    //SET CURSOR TO IMMEDIATELY AFTER LARGEST INDEX KEY
+    locate(key, cursor);
+    
+    //INSERT INTO KEY, RECORD INTO LEFTNODE CURSOR POINTS TO
+    BTLeafNode* node = new BTLeafNode();
+    
+    //LOAD NODE FROM .idx FILE
+    node->read(cursor.pid, pf);
+    
+    //IF SPACE AVAILABLE ON LEAF NODE, SIMPLE ADD CASE
+    if (node->getKeyCount() < node->getMaxKeyCount())
+    {
+        node->insert(key, rid);
+        return 0;
+    }
+    
+    //SPLITTING CASE
+    else
+    {
+        BTLeafNode* sibling = new BTLeafNode();
+        int siblingKey = 0;
+        node->insertAndSplit(key, rid, sibling, siblingKey);
+        
+        //NEED TO OBTAIN PARENT PID
+        PageId parentPid;
+        getParentPid(node->getNextNodePtr(), key, parentPid);
+        
+        //WE INSERT OUR THE MIDDLE KEY INTO OUR NON LEAF NODE WITH THE PID OF THE CREATED SIBLING
+        insertIntoNonLeaf(siblingKey, parentPid, node->getNextNodePtr());
+    }
+    
     return 0;
+}
+
+RC BTreeIndex::getParentPid(PageId childPid, int key, PageId &parentPid)
+{
+    //START FROM ROOT
+    int level=0;
+    BTNonLeafNode* node=new BTNonLeafNode();
+    node->initializeRoot(0,-1,-1);
+    node->read(rootPid, pf);
+    
+    PageId matchPid = rootPid;
+    while (matchPid != childPid || level>treeHeight)
+    {
+        parentPid = matchPid;
+        node->locateChildPtr(key, matchPid);
+        delete node;
+        node = new BTNonLeafNode();
+        node->read(matchPid, pf);
+        
+        
+        level++;
+    }
+    
+    delete node;
+    
+    if (matchPid != childPid)
+        matchPid = -1;
+}
+
+//RECURSIVE FUNCTION USED TO RECURSIVELY SPLIT UP NON LEAF NODES ON OVERFLOW
+//Key: Key we want to insert into non leaf node
+//pid: Pid of the current nonleaf node that needs to be loaded
+//siblingPid: The pid of the previously created right sibling that we want to add into our non leaf ode along with key
+RC BTreeIndex::insertIntoNonLeaf(int key, PageId pid, PageId siblingPid)
+{
+    BTNonLeafNode *curNode = new BTNonLeafNode();
+    curNode->read(pid, pf);
+    
+    if (curNode->getKeyCount() < curNode->getMaxKeyCount())
+    {
+        curNode->insert(key, siblingPid);
+        return 0;
+    }
+    
+    else if (curNode->getKeyCount() == curNode->getMaxKeyCount())
+    {
+        int midkey = 0;
+        BTNonLeafNode *sibling = new BTNonLeafNode();
+        curNode->insertAndSplit(key, siblingPid, sibling, midkey);
+        PageId parentPid;
+        getParentPid(pid, key, parentPid);
+        insertIntoNonLeaf(midkey, parentPid, curNode->getNextNodePtr());
+        
+        return 0;
+    }
 }
 /**
  * Run the standard B+Tree key search algorithm and identify the

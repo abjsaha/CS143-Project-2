@@ -64,6 +64,8 @@ class BTreeIndex {
    * @return error code. 0 if no error
    */
   RC insert(int key, const RecordId& rid);
+  RC insertIntoNonLeaf(int key, PageId pid, PageId siblingPid);
+  RC getParentPid(PageId childPid, int key, PageId &parentPid);
 
   /**
    * Run the standard B+Tree key search algorithm and identify the
