@@ -13,6 +13,10 @@
 #include "RecordFile.h"
 #include "PageFile.h"
 #include <string.h>
+ //REMOVE
+ #include <iostream>
+#include <string>
+#include <stdio.h>
 /**
  * BTLeafNode: The class representing a B+tree leaf node.
  */
@@ -22,7 +26,7 @@ class BTLeafNode {
     ~BTLeafNode();
     int getMaxKeyCount();
     void setCurrKeyCount(int x);
-
+    void print();
    /**
     * Insert the (key, rid) pair to the node.
     * Remember that all keys inside a B+tree node should be kept sorted.
@@ -128,6 +132,8 @@ class BTNonLeafNode {
     ~BTNonLeafNode();
     int getMaxKeyCount();
     void setCurrKeyCount(int x);
+    void print();
+    RC insertNoSizeCheck(int key, PageId pid);
    /**
     * Insert a (key, pid) pair to the node.
     * Remember that all keys inside a B+tree node should be kept sorted.

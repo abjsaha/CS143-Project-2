@@ -17,7 +17,6 @@
 #include "Bruinbase.h"
 #include "SqlEngine.h"
 #include "BTreeIndex.h"
-
 using namespace std;
 
 // external functions and variables for load file and sql command parsing 
