@@ -176,13 +176,13 @@ RC SqlEngine::load(const string& table, const string& loadfile, bool index)
           fprintf(stderr, "Could not write to Index for Table\n");
           break;
         }
+        printf("Inserting: %d\n", key);
       }
     }
   }
   record_file.close();
   file.close();
   if(index) {
-    bpt.printTree();
     bpt.close();
   }
   return 0;
