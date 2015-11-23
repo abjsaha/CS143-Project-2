@@ -7,8 +7,7 @@ using namespace std;
 //leaf node constructor
 BTLeafNode::BTLeafNode() {
 	memset(buffer, 0, PageFile::PAGE_SIZE);
-	//maxKeyCount=(PageFile::PAGE_SIZE-sizeof(PageId))/sizeof(entry);
-	maxKeyCount=5;
+	maxKeyCount=(PageFile::PAGE_SIZE-sizeof(PageId))/sizeof(entry);
 	currKeyCount=0;
 }
 //leaf node destructor
@@ -204,8 +203,7 @@ RC BTLeafNode::setNextNodePtr(PageId pid)
 //non-leaf node constructor
 BTNonLeafNode::BTNonLeafNode() {
 	memset(buffer, 0, PageFile::PAGE_SIZE);
-	//maxKeyCount=(PageFile::PAGE_SIZE-sizeof(PageId))/sizeof(entry);
-	maxKeyCount=5;
+	maxKeyCount=(PageFile::PAGE_SIZE-sizeof(PageId))/sizeof(entry);
 	currKeyCount=0;
 }
 //leaf node destructor
