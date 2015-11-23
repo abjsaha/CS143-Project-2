@@ -134,7 +134,6 @@ RC SqlEngine::select(int attr, const string& table, const vector<SelCond>& cond)
 
 RC SqlEngine::load(const string& table, const string& loadfile, bool index)
 {
-  /* your code here */
   RecordFile record_file;
   RecordId record_id;
   RC rc;
@@ -182,8 +181,10 @@ RC SqlEngine::load(const string& table, const string& loadfile, bool index)
   }
   record_file.close();
   file.close();
-  if(index)
+  if(index) {
+    //bpt.printTree();
     bpt.close();
+  }
   return 0;
 }
 

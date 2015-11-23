@@ -41,7 +41,8 @@ typedef struct {
 class BTreeIndex {
  public:
   BTreeIndex();
-
+  void printRecurse(PageId pid, int level);
+  void printTree();
   /**
    * Open the index file in read or write mode.
    * Under 'w' mode, the index file should be created if it does not exist.
@@ -64,8 +65,9 @@ class BTreeIndex {
    * @return error code. 0 if no error
    */
   RC insert(int key, const RecordId& rid);
-  RC insertIntoNonLeaf(int key, PageId pid, PageId siblingPid);
-  RC getParentPid(PageId childPid, int key, PageId &parentPid);
+  RC insertRecursively(int key, const RecordId& rid, int height, PageId curNodePid, int& nkey, PageId& npid);
+  //RC insertIntoNonLeaf(int key, PageId pid, PageId siblingPid);
+  //RC getParentPid(PageId childPid, int key, PageId &parentPid);
 
   /**
    * Run the standard B+Tree key search algorithm and identify the

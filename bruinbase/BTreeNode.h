@@ -23,7 +23,7 @@
 class BTLeafNode {
   public:
     BTLeafNode();
-    ~BTLeafNode();
+    //~BTLeafNode();
     int getMaxKeyCount();
     void setCurrKeyCount(int x);
     void print();
@@ -129,10 +129,11 @@ class BTLeafNode {
 class BTNonLeafNode {
   public:
     BTNonLeafNode();
-    ~BTNonLeafNode();
+    //~BTNonLeafNode();
     int getMaxKeyCount();
     void setCurrKeyCount(int x);
     void print();
+    PageId getPID(int eid);
     RC insertNoSizeCheck(int key, PageId pid);
    /**
     * Insert a (key, pid) pair to the node.

@@ -11,9 +11,9 @@ BTLeafNode::BTLeafNode() {
 	currKeyCount=0;
 }
 //leaf node destructor
-BTLeafNode::~BTLeafNode() {
-	delete[] buffer;
-}
+// BTLeafNode::~BTLeafNode() {
+// 	delete[] buffer;
+// }
 //get method for maxKeyCount
 int BTLeafNode::getMaxKeyCount() {
 	return maxKeyCount;
@@ -207,9 +207,9 @@ BTNonLeafNode::BTNonLeafNode() {
 	currKeyCount=0;
 }
 //leaf node destructor
-BTNonLeafNode::~BTNonLeafNode() {
-	delete[] buffer;
-}
+// BTNonLeafNode::~BTNonLeafNode() {
+// 	delete[] buffer;
+// }
 //get method for maxKeyCount
 int BTNonLeafNode::getMaxKeyCount() {
 	return maxKeyCount;
@@ -371,7 +371,10 @@ void BTNonLeafNode::print() {
 	}
 	printf("\n");
 }
-
+PageId BTNonLeafNode::getPID(int eid) {
+	entry* tmp=(entry*) (buffer +sizeof(PageId));
+	return (tmp+eid)->pid;
+}
 void BTLeafNode::print()
 {
 	int key;
