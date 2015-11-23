@@ -182,7 +182,7 @@ RC SqlEngine::load(const string& table, const string& loadfile, bool index)
   record_file.close();
   file.close();
   if(index) {
-    //bpt.printTree();
+    bpt.printTree();
     bpt.close();
   }
   return 0;
