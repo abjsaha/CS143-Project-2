@@ -208,7 +208,7 @@ RC BTreeIndex::insertRecursively(int key, const RecordId& rid, int height, PageI
 		//try inserting the key into leaf node
 		if(leaf.insert(key, rid)==0) {
 			//if insertion succeeds wrtie the node aka no need to split and recursively call
-			leaf.print();
+			//leaf.print();
 			leaf.write(curNodePid, pf);
 			return 0;
 		}
@@ -236,7 +236,7 @@ RC BTreeIndex::insertRecursively(int key, const RecordId& rid, int height, PageI
 	PageId cpid=-1;
 	//get child ptr to insert to
 	node.locateChildPtr(key, cpid);
-	printf("Pid of child: %d\n", cpid);
+	//printf("Pid of child: %d\n", cpid);
 	int gkey;
 	PageId gpid;
 	//if node needs to be split and added to
@@ -244,7 +244,7 @@ RC BTreeIndex::insertRecursively(int key, const RecordId& rid, int height, PageI
 		//try inserting
 		if(node.insert(gkey, gpid)==0) {
 			//insertion succeeds then write node to disk
-			node.print();
+			//node.print();
 			node.write(curNodePid, pf);
 			return 0;
 		}

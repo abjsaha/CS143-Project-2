@@ -285,6 +285,7 @@ no_result:
 
 RC SqlEngine::load(const string& table, const string& loadfile, bool index)
 {
+    int debug = 0;
     RecordFile record_file;
     RecordId record_id;
     RC rc;
@@ -293,16 +294,19 @@ RC SqlEngine::load(const string& table, const string& loadfile, bool index)
     ifstream file(loadfile.c_str());
     //open loadfile
     if(!file.is_open()) {
-        fprintf(stderr, "Could Not Open File Error: %s\n", loadfile.c_str());
+        if (debug)
+            fprintf(stderr, "Could Not Open File Error: %s\n", loadfile.c_str());
     }
     //open table file
     if((rc=record_file.open(table+".tbl", 'w'))<0) {
-        fprintf(stderr, "Could Not Create or Write to Table: %s\n", table.c_str());
+        if (debug)
+            fprintf(stderr, "Could Not Create or Write to Table: %s\n", table.c_str());
     }
     //check index option
     if(index) {
         if((rc=bpt.open(table+".idx", 'w'))<0) {
-            fprintf(stderr, "Could Not Create or Write to Index for Table: %s\n", table.c_str());
+            if (debug)
+                fprintf(stderr, "Could Not Create or Write to Index for Table: %s\n", table.c_str());
         }
     }
     //iterate through tuples
@@ -312,22 +316,26 @@ RC SqlEngine::load(const string& table, const string& loadfile, bool index)
         getline(file, line);
         
         if((rc=parseLoadLine(line, key, value))<0) {
-            fprintf(stderr, "Could not parse line from File: %s\n", loadfile.c_str());
+            if (debug)
+                fprintf(stderr, "Could not parse line from File: %s\n", loadfile.c_str());
             break;
         }
         //ignore empty lines
         if(key!=0||strcmp(value.c_str(), "")!=0) {
             //write to table
             if((rc=record_file.append(key, value, record_id))<0) {
-                fprintf(stderr, "Could not insert key: %s\n", key);
+                if (debug)
+                    fprintf(stderr, "Could not insert key: %s\n", key);
                 break;
             }
             if(index) {
                 if((rc=bpt.insert(key, record_id))<0) {
-                    fprintf(stderr, "Could not write to Index for Table\n");
+                    if (debug)
+                        fprintf(stderr, "Could not write to Index for Table\n");
                     break;
                 }
-                printf("Inserting: %d\n", key);
+                if (debug)
+                    printf("Inserting: %d\n", key);
             }
         }
     }
